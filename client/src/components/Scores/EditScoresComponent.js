@@ -35,7 +35,7 @@ export default class EditScore extends Component {
     }
 
     getScoreDetails(){
-        axios.get("http://localhost:3001/api/scores/"+this.props.match.params.id)
+        axios.get("https://yolf-app.herokuapp.com/api/scores/"+this.props.match.params.id)
             .then(response => {
                 this.setState({
                     date: response.data.date,

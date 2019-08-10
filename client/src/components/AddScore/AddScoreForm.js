@@ -31,7 +31,7 @@ export default class AddScoreForm extends Component {
     }
     //get the information from "/courses" to pass it down to courses component for course selector
     componentDidMount(){
-        axios.get('https://yolf-app.herokuapp.com/api/courses')
+        axios.get('api/courses')
             .then(res => {
                 this.setState({
                     courses: res.data
