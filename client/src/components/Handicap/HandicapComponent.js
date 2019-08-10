@@ -9,7 +9,7 @@ export default class Handicap extends Component {
     }
 
     componentDidMount(){
-        axios.get('http://localhost:3001/api/scores/')
+        axios.get('https://yolf-app.herokuapp.com/api/scores/')
             .then(res => {
                 this.setState({
                     scores: res.data

@@ -128,7 +128,7 @@ export default class EditScore extends Component {
             tripleBogeys: this.state.tripleBogeys
         };
         console.log(score)
-        axios.post("http://localhost:3001/api/scores/update/"+this.props.match.params.id,score)
+        axios.post("https://yolf-app.herokuapp.com/api/scores/update/"+this.props.match.params.id,score)
             .then(res=> console.log(res.data));
         
         this.props.history.push("/scores");
