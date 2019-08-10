@@ -59,7 +59,7 @@ export default class EditScore extends Component {
     }
 
     getCourses(){
-        axios.get('http://localhost:3001/api/courses')
+        axios.get('https://yolf-app.herokuapp.com/api/courses')
             .then(res => {
                 this.setState({
                     courses: res.data
