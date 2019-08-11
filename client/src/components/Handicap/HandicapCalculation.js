@@ -88,12 +88,10 @@ const HandicapCalculation = (props) => {
         } else {
             rounds = 10
         }
-
         //add score to totaL
         for(let i =0; i < rounds; i++){
             total = total + scoresForIndex[i]
         }
-
         //return sum of all scores by the number of rounds - display number with 2 decimals
         return (total/rounds).toFixed(2);
     }

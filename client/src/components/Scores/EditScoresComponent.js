@@ -119,7 +119,7 @@ export default class EditScore extends Component {
             //get courses coursePar
             let coursePar = roundCourse['coursePar'];
             //subtract coursePar from score
-            let roundScoreToPar = score - coursePar;
+            let roundScoreToPar = roundScore - coursePar;
             return roundScoreToPar;
         }
 
