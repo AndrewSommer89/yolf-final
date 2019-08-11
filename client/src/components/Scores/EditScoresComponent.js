@@ -35,7 +35,7 @@ export default class EditScore extends Component {
     }
 
     getScoreDetails(){
-        axios.get("https://yolf-app.herokuapp.com/api/scores/"+this.props.match.params.id)
+        axios.get("/api/scores/"+this.props.match.params.id)
             .then(response => {
                 this.setState({
                     date: response.data.date,
@@ -59,7 +59,7 @@ export default class EditScore extends Component {
     }
 
     getCourses(){
-        axios.get('https://yolf-app.herokuapp.com/api/courses')
+        axios.get('/api/courses')
             .then(res => {
                 this.setState({
                     courses: res.data
@@ -113,13 +113,25 @@ export default class EditScore extends Component {
         }
 
         let handicapScore = getHandicapScore();
+
+        //get shots agaisnt par (totalScore - roundCourse.coursePar)
+        function getScoreToPar(){
+            //get courses coursePar
+            let coursePar = roundCourse['coursePar'];
+            //subtract coursePar from score
+            let roundScoreToPar = score - coursePar;
+            return roundScoreToPar;
+        }
+
+        let roundScoreToPar = getScoreToPar();
+
         const score = {
             date: this.state.date,
             course: this.state.course,
             totalScore: this.state.totalScore,
             handicapScore: handicapScore,
             totalPutts: this.state.totalPutts,
-            scoreToPar: this.state.scoreToPar,
+            scoreToPar: roundScoreToPar,
             eagles: this.state.eagles,
             birdies: this.state.birdies,
             pars: this.state.pars,
@@ -128,7 +140,7 @@ export default class EditScore extends Component {
             tripleBogeys: this.state.tripleBogeys
         };
         console.log(score)
-        axios.post("https://yolf-app.herokuapp.com/api/scores/update/"+this.props.match.params.id,score)
+        axios.post("api/scores/update/"+this.props.match.params.id,score)
             .then(res=> console.log(res.data));
         
         this.props.history.push("/scores");
@@ -184,15 +196,6 @@ export default class EditScore extends Component {
                                 type="number"
                                 value={this.state.totalPutts}
                                 name="totalPutts"
-                            />
-                        </Form.Group>
-                        <Form.Group as={Col}>
-                            <Form.Label>Score To Par</Form.Label>
-                            <Form.Control
-                                className="formInput"
-                                type="number"
-                                value={this.state.scoreToPar}
-                                name="scoreToPar"
                             />
                         </Form.Group>
                     </Form.Row>

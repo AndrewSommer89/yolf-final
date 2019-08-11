@@ -66,21 +66,27 @@ export default class AddScoreForm extends Component {
                 }
             }
         }
-        
+        //get whatever course you pick in course picker
         let roundCourse = findCourseByName(courses,"name",course);
-
+        
+        //calculate handicap score
         function getHandicapScore(){
+            //get slope and rating and calculate handicap of back tees
             if(teebox === "Back Tees"){
                 let slope = roundCourse['backTeeSlope'];
                 let rating = roundCourse['backTeeRating'];
                 let handicapScore = (score-rating)*113/slope;
                 return handicapScore;
-            } else if(teebox === "Middle Tees"){
+            } 
+            //get slope and rating and calculate handicap of middle tees
+            else if(teebox === "Middle Tees"){
                 let slope = roundCourse['middleTeeSlope'];
                 let rating = roundCourse['middleTeeRating'];
                 let handicapScore = (score-rating)*113/slope;
                 return handicapScore;
-            } else if(teebox === "Front Tees"){
+            } 
+            //get slope and rating and calculate handicap of back tees
+            else if(teebox === "Front Tees"){
                 let slope = roundCourse['frontTeeSlope'];
                 let rating = roundCourse['frontTeeRating'];
                 let handicapScore = (score-rating)*113/slope
@@ -90,6 +96,16 @@ export default class AddScoreForm extends Component {
 
         let handicapScore = getHandicapScore();
 
+        //get shots agaisnt par (totalScore - roundCourse.coursePar)
+        function getScoreToPar(){
+            //get courses coursePar
+            let coursePar = roundCourse['coursePar'];
+            //subtract coursePar from score
+            let roundScoreToPar = score - coursePar;
+            return roundScoreToPar;
+        }
+
+        let roundScoreToPar = getScoreToPar();
 
         //add current date to score
         const date = new Date();
@@ -106,7 +122,7 @@ export default class AddScoreForm extends Component {
             course: this.state.course,
             totalScore: this.state.totalScore,
             totalPutts: this.state.totalPutts,
-            scoreToPar: this.state.scoreToPar,
+            scoreToPar: roundScoreToPar,
             holeInOnes: this.state.holeInOnes,
             eagles: this.state.eagles,
             birdies: this.state.birdies,
@@ -117,7 +133,7 @@ export default class AddScoreForm extends Component {
         };
         
     //send and save the new score to the database
-        axios.post("api/scores", newScore)
+        axios.post("/api/scores", newScore)
             .then(res=> console.log(res.data));
 
         
@@ -183,15 +199,6 @@ export default class AddScoreForm extends Component {
                                 type="number"
                                 value={this.state.totalPutts}
                                 name="totalPutts"
-                            />
-                        </Form.Group>
-                        <Form.Group as={Col}>
-                            <Form.Label>Score To Par</Form.Label>
-                            <Form.Control
-                                className="formInput"
-                                type="number"
-                                value={this.state.scoreToPar}
-                                name="scoreToPar"
                             />
                         </Form.Group>
                     </Form.Row>

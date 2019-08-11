@@ -70,3 +70,11 @@ exports.update = function(req,res){
             });
     });
 }
+
+exports.remove = function(req,res){
+    let id = ObjectId(req.params.id);
+    Score.findByIdAndRemove(id,function(err,score){
+        if(err) return console.error(err)
+        return res.json(score)
+    });
+}

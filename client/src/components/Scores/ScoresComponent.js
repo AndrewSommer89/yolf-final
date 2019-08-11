@@ -4,7 +4,10 @@ import axios from "axios";
 import Table from 'react-bootstrap/Table'
 import "./Scores.css"
 
+
+
 const Score = props => (
+
     <tr>
         <td>{props.score.date}</td>
         <td>{props.score.course}</td>
@@ -31,8 +34,8 @@ export default class Scores extends Component {
 
     //retrieve the scores data from database
     componentDidMount(){
-        //acces "/scores" endpoint
-        axios.get('api/scores/')
+        // "/scores" endpoint
+        axios.get('/api/scores/')
             .then(response => {
                 //assign data from endpoint to the scores property
                 this.setState({scores: response.data});
@@ -43,7 +46,7 @@ export default class Scores extends Component {
     }
 
     componentDidUpdate(){
-        axios.get('api/scores/')
+        axios.get('/api/scores/')
             .then(response => {
                 this.setState({scores: response.data});
             })
@@ -52,7 +55,7 @@ export default class Scores extends Component {
             })
     }
 
-    //create array of all scores
+    //create array of all scores in reverse so that 
     scores() {
         return this.state.scores.reverse().map(function(score,i){
             return <Score score={score} key={i} />;
